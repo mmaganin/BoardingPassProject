@@ -1,16 +1,21 @@
 package com.gensparkproj.boardingpass.Entity;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="tbl_train")
 public class Train {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int train_id;
+
+    @Column(name = "departure_time")
+    String departureTime;
 
     String date;
     String origin;
     String destination;
     String eta;
-    String departureTime;
 
     public int getTrain_id() {
         return train_id;
