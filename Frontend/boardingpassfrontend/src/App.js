@@ -1,22 +1,25 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import {Container } from "react-bootstrap";
-import Welcome from './Views/Welcome';
-import SearchResults from './Views/SearchResults';
-import CustomerInfo from './Views/CustomerInfo';
-import PurchasedTickets from './Views/PurchasedTickets';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import SearchResults from "./Views/SearchResults";
+import CustomerInfo from "./Views/CustomerInfo";
+import PurchasedTickets from "./Views/PurchasedTickets";
 import Ticket from "./Views/Ticket";
+import Welcome from "./Views/Welcome";
+import Header from "./Components/Header";
 
-const App = () => {
-    return (
-        <Router>
-            <Container>
-                <Route path="/" component={Welcome} exact />
-                <Route path="/searchresults" component={SearchResults} />
-                <Route path="/customerinfo" component={CustomerInfo} />
-                <Route path="/ticketconfirm" component={Ticket} />
-                <Route path="/purchaselist" component={PurchasedTickets} />
-            </Container>
-        </Router>
-    )
-}
+function App() {
+ return (
+  <Router>
+    <Header />
+    <Routes>
+     <Route path="/" element={<Welcome />} exact />
+     <Route path="/searchresults" element={<SearchResults />} />
+     <Route path="/customerinfo" element={<CustomerInfo />} />
+     <Route path="/ticketconfirm" element={<Ticket />} />
+     <Route path="/purchaselist" element={<PurchasedTickets />} />
+    </Routes>
+  </Router>
+ );
+};
+
+export default App;
