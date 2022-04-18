@@ -1,7 +1,13 @@
-package com.gensparkproj.boardingpass;
+package com.gensparkproj.boardingpass.Entity;
+
+import com.gensparkproj.boardingpass.Entity.Train;
+
+import javax.persistence.Id;
 
 public class TrainTicket {
+    @Id
     int ticket_id;
+
     Train train;
     int ticketPrice;
 

@@ -1,9 +1,14 @@
-package com.gensparkproj.boardingpass;
+package com.gensparkproj.boardingpass.Entity;
 
+import com.gensparkproj.boardingpass.Entity.BoardingPass;
+
+import javax.persistence.Id;
 import java.util.ArrayList;
 
 public class Customer {
+    @Id
     int cus_id;
+
     int name;
     int age;
     String email;

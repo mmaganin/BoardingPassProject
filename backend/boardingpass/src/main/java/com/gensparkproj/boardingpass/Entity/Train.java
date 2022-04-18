@@ -1,7 +1,11 @@
-package com.gensparkproj.boardingpass;
+package com.gensparkproj.boardingpass.Entity;
+
+import javax.persistence.Id;
 
 public class Train {
+    @Id
     int train_id;
+
     String date;
     String origin;
     String destination;
