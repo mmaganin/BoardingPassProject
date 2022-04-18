@@ -5,6 +5,7 @@ import com.gensparkproj.boardingpass.Entity.BoardingPass;
 import javax.persistence.*;
 import java.util.ArrayList;
 
+//POJO to represent a customer with boarding passes
 @Entity
 @Table(name="tbl_customer")
 public class Customer {
