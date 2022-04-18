@@ -2,14 +2,19 @@ package com.gensparkproj.boardingpass.Entity;
 
 import com.gensparkproj.boardingpass.Entity.Train;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="tbl_trainticket")
 public class TrainTicket {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int ticket_id;
 
-    Train train;
+    @Column(name = "ticket_price")
     int ticketPrice;
+
+    int train_id;
 
     public int getTicket_id() {
         return ticket_id;
@@ -17,14 +22,6 @@ public class TrainTicket {
 
     public void setTicket_id(int ticket_id) {
         this.ticket_id = ticket_id;
-    }
-
-    public Train getTrain() {
-        return train;
-    }
-
-    public void setTrain(Train train) {
-        this.train = train;
     }
 
     public int getTicketPrice() {
@@ -35,12 +32,20 @@ public class TrainTicket {
         this.ticketPrice = ticketPrice;
     }
 
+    public int getTrain_id() {
+        return train_id;
+    }
+
+    public void setTrain_id(int train_id) {
+        this.train_id = train_id;
+    }
+
     @Override
     public String toString() {
         return "TrainTicket{" +
                 "ticket_id=" + ticket_id +
-                ", train=" + train +
                 ", ticketPrice=" + ticketPrice +
+                ", train_id=" + train_id +
                 '}';
     }
 }

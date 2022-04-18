@@ -2,19 +2,26 @@ package com.gensparkproj.boardingpass.Entity;
 
 import com.gensparkproj.boardingpass.Entity.BoardingPass;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 
+@Entity
+@Table(name="tbl_customer")
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int cus_id;
+
+    @Column(name = "phone_num")
+    String phoneNum;
+
+    @Column(name = "boarding_passes")
+    ArrayList<Integer> boardingPassesIds;
 
     int name;
     int age;
     String email;
-    String phoneNum;
     String gender;
-    ArrayList<BoardingPass> boardingPasses;
 
     public int getCus_id() {
         return cus_id;
@@ -22,6 +29,22 @@ public class Customer {
 
     public void setCus_id(int cus_id) {
         this.cus_id = cus_id;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
+    public ArrayList<Integer> getBoardingPassesIds() {
+        return boardingPassesIds;
+    }
+
+    public void setBoardingPassesIds(ArrayList<Integer> boardingPassesIds) {
+        this.boardingPassesIds = boardingPassesIds;
     }
 
     public int getName() {
@@ -48,14 +71,6 @@ public class Customer {
         this.email = email;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -68,12 +83,12 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "cus_id=" + cus_id +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", boardingPassesIds=" + boardingPassesIds +
                 ", name=" + name +
                 ", age=" + age +
                 ", email='" + email + '\'' +
-                ", phoneNum='" + phoneNum + '\'' +
                 ", gender='" + gender + '\'' +
-                ", boardingPasses=" + boardingPasses +
                 '}';
     }
 }
