@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+//Configures this class to be the Spring Boot controller class
 @RestController
 public class BoardingPassController {
+    //Autowired automatically initializes these dependencies without having to create new objects (Spring Boot feature)
     @Autowired
     BoardingPassDao boardingPassDao;
     @Autowired

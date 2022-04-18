@@ -2,6 +2,7 @@ package com.gensparkproj.boardingpass.Entity;
 
 import javax.persistence.*;
 
+//POJO to represent a train's travel info
 @Entity
 @Table(name="tbl_train")
 public class Train {
