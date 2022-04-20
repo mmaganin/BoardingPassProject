@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 //TODO: handle search submission to query MTA with results
 function SearchButton(props) {
     return (
-        <Link to={`/searchresults/${props.from}`}>
+        <Link to="/searchresults" state={props.from}>
             <button type="button" class="btn btn-primary">
                 Search
             </button>

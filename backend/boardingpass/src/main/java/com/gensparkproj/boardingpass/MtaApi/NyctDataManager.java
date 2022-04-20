@@ -1,6 +1,9 @@
 package com.gensparkproj.boardingpass.MtaApi;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.context.annotation.Bean;
+
+import javax.persistence.Entity;
 
 import java.io.File;
 import java.io.IOException;
