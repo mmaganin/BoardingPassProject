@@ -4,14 +4,20 @@ import com.gensparkproj.boardingpass.Dao.BoardingPassDao;
 import com.gensparkproj.boardingpass.Dao.CustomerDao;
 import com.gensparkproj.boardingpass.Dao.TrainDao;
 import com.gensparkproj.boardingpass.Dao.TrainTicketDao;
-import com.gensparkproj.boardingpass.Entity.BoardingPass;
-import com.gensparkproj.boardingpass.Entity.Customer;
-import com.gensparkproj.boardingpass.Entity.TrainTicket;
+import com.gensparkproj.boardingpass.Entity.CustomerTravelInfo;
+import com.gensparkproj.boardingpass.MtaApi.NyctDataManager;
+import com.gensparkproj.boardingpass.MtaApi.Stop;
+import com.gensparkproj.boardingpass.MtaApi.StopTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.Map;
 
 //Configures this class to be the Spring Boot controller class
 @RestController
@@ -26,13 +32,17 @@ public class BoardingPassController {
     @Autowired
     TrainTicketDao trainTicketDao;
 
+    NyctDataManager nyctDataManager;
+
+
     //Test db communication with get request
-    @GetMapping("/")
-    public void addCustomer(){
-        BoardingPass boardingPass = new BoardingPass();
-        boardingPass.setCustomer_id(1);
-        boardingPass.setTicket_id(1);
-        boardingPass.setBoardingPassNum(1);
-        boardingPassDao.save(boardingPass);
+    @GetMapping("/searchresults")
+    public Map<Stop, LinkedList<StopTime>> getPossibleDestinations(@RequestBody CustomerTravelInfo customerTravelInfo) throws IOException {
+        nyctDataManager = new NyctDataManager();
+
+        String time = customerTravelInfo.getDeparture_time();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        return nyctDataManager.getPossibleDestinations(customerTravelInfo.getFrom_location(), LocalDateTime.parse(time, dateTimeFormatter));
     }
 }

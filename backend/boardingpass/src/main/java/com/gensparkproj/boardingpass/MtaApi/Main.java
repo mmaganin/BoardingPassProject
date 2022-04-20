@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 import com.google.protobuf.ExtensionRegistry;
 import com.google.transit.realtime.GtfsRealtime;
 import com.google.transit.realtime.GtfsRealtimeConstants;
