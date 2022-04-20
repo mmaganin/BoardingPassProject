@@ -1,8 +1,13 @@
 import React from 'react'
+import {useLocation} from "react-router-dom"
 
-function SearchResults() {
+const SearchResults = (props) => {
+  console.log(props.location)
+  const location = useLocation();
+  console.log(location)
+
   return (
-    <div>SearchResults</div>
+    <div>SearchResults + {location.state?.from}</div>
   )
 }
 
