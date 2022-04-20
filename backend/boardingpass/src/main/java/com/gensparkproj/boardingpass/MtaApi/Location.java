@@ -1,0 +1,2 @@
+public record Location() {
+}
