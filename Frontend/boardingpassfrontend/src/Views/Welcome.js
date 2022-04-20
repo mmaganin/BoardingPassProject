@@ -1,5 +1,4 @@
 import React from "react";
-import { Link} from "react-router-dom"
 import SearchButton from "../Buttons/SearchButton";
 
 const Welcome = () => {
@@ -12,17 +11,6 @@ const Welcome = () => {
     <div class="search-form input-group mb-3">
      <span class="input-group-text" id="inputGroup-sizing-default">
       From:
-     </span>
-     <input
-      type="text"
-      class="form-control"
-      aria-label="Sizing example input"
-      aria-describedby="inputGroup-sizing-default"
-     ></input>
-    </div>
-    <div class="search-form input-group mb-3">
-     <span class="input-group-text" id="inputGroup-sizing-default">
-      To:
      </span>
      <input
       type="text"
