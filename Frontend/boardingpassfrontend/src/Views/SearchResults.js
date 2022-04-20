@@ -1,11 +1,10 @@
 import React from 'react'
 import {useLocation} from "react-router-dom"
 
-const SearchResults = (props) => {
-  const location = useLocation();
-  console.log(location.from);
+const SearchResults = () => {
+
   return (
-    <div>SearchResults</div>
+    <div>SearchResults for {useLocation().state}</div>
   )
 }
 
