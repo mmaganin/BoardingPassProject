@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 import java.time.LocalTime;
 
 public record StopTime(

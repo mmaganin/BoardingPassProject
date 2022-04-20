@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 public record CalendarDate(
         String service_id,
         String date,

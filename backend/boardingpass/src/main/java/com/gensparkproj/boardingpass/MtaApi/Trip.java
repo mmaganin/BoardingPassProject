@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 public record Trip(
         String route_id,
         String service_id,

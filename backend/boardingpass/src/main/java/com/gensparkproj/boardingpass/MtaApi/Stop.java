@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 public record Stop(
         String stop_id,
         String stop_code,

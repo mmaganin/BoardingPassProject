@@ -13,7 +13,7 @@ function App() {
     <Header />
     <Routes>
      <Route path="/" element={<Welcome />} exact />
-     <Route path="/searchresults" element={<SearchResults />} />
+     <Route path="/searchresults" render={(props) => <SearchResults {}/>} />
      <Route path="/customerinfo" element={<CustomerInfo />} />
      <Route path="/ticketconfirm" element={<Ticket />} />
      <Route path="/purchaselist" element={<PurchasedTickets />} />

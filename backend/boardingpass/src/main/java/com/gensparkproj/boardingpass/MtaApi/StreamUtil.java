@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;

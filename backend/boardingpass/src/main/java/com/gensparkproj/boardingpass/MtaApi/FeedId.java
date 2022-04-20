@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 /**
  * Helper for translating feeds to their integer ID
  * 7 Line is labeled FLUSHING below
