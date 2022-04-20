@@ -2,6 +2,7 @@ package com.gensparkproj.boardingpass.Entity;
 
 import javax.persistence.*;
 
+//POJO to represent a customer's boarding pass
 @Entity
 @Table(name="tbl_boardingpass")
 public class BoardingPass {
@@ -11,10 +12,6 @@ public class BoardingPass {
     int boardingPassNum;
     int ticket_id;
     int customer_id;
-
-    public BoardingPass(){
-
-    }
 
     public int getBoardingPassNum() {
         return boardingPassNum;

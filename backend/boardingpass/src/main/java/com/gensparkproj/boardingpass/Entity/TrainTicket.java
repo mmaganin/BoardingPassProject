@@ -4,6 +4,7 @@ import com.gensparkproj.boardingpass.Entity.Train;
 
 import javax.persistence.*;
 
+//POJO to represent a train ticket's info
 @Entity
 @Table(name="tbl_trainticket")
 public class TrainTicket {
