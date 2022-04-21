@@ -159,9 +159,9 @@ class Welcome extends React.Component {
                                 class="form-check-input"
                                 type="radio"
                                 name="flexRadioDefault"
-                                id="flexRadioDefault1"
-                                value="male"
-                                checked={this.state.selectedGender}
+                                id="male"
+                                value={this.state.selectedGender}
+                                checked
                             ></input>
                             <label class="form-check-label" for="flexRadioDefault1">
                                 Male
@@ -172,9 +172,8 @@ class Welcome extends React.Component {
                                 class="form-check-input"
                                 type="radio"
                                 name="flexRadioDefault"
-                                id="flexRadioDefault2"
-                                value="female"
-                                checked={this.state.selectedGender}
+                                id="female"
+                                value={this.state.selectedGender}
                             ></input>
                             <div>
                                 <label class="form-check-label" for="flexRadioDefault2">
