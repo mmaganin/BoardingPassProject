@@ -9,9 +9,7 @@ import com.gensparkproj.boardingpass.MtaApi.NyctDataManager;
 import com.gensparkproj.boardingpass.MtaApi.Stop;
 import com.gensparkproj.boardingpass.MtaApi.StopTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -36,7 +34,8 @@ public class BoardingPassController {
 
 
     //Test db communication with get request
-    @GetMapping("/searchresults")
+    @PostMapping("/searchresults")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Map<Stop, LinkedList<StopTime>> getPossibleDestinations(@RequestBody CustomerTravelInfo customerTravelInfo) throws IOException {
         nyctDataManager = new NyctDataManager();
 

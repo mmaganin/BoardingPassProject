@@ -3,8 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 //TODO: wire up functionality with MTA API call
 //TODO: handle search submission to query MTA with results
 function SearchButton(props) {
+    console.log(props.dateTime + " " + props.from)
+    var inputs = [props.from, props.dateTime]
     return (
-        <Link to="/searchresults" state={{from: props.from, dateTime: props.dateTime}}>
+        <Link to="/searchresults" state={inputs}>
             <button type="button" class="btn btn-primary">
                 Search
             </button>
