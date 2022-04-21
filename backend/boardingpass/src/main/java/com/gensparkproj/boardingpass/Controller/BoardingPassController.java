@@ -5,17 +5,19 @@ import com.gensparkproj.boardingpass.Dao.CustomerDao;
 import com.gensparkproj.boardingpass.Dao.TrainDao;
 import com.gensparkproj.boardingpass.Dao.TrainTicketDao;
 import com.gensparkproj.boardingpass.Entity.CustomerTravelInfo;
+import com.gensparkproj.boardingpass.Entity.JsonableStopTime;
+import com.gensparkproj.boardingpass.Entity.StopAndTimes;
 import com.gensparkproj.boardingpass.MtaApi.NyctDataManager;
 import com.gensparkproj.boardingpass.MtaApi.Stop;
 import com.gensparkproj.boardingpass.MtaApi.StopTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 //Configures this class to be the Spring Boot controller class
 @RestController
@@ -36,12 +38,24 @@ public class BoardingPassController {
     //Test db communication with get request
     @PostMapping("/searchresults")
     @CrossOrigin(origins = "http://localhost:3000")
-    public Map<Stop, LinkedList<StopTime>> getPossibleDestinations(@RequestBody CustomerTravelInfo customerTravelInfo) throws IOException {
+    public List<StopAndTimes> getPossibleDestinations(@RequestBody CustomerTravelInfo customerTravelInfo) throws IOException {
         nyctDataManager = new NyctDataManager();
 
         String time = customerTravelInfo.getDeparture_time();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        Map<Stop, LinkedList<StopTime>> fastestRoutes = nyctDataManager.getPossibleDestinations(customerTravelInfo.getFrom_location(), LocalDateTime.parse(time, dateTimeFormatter));
 
-        return nyctDataManager.getPossibleDestinations(customerTravelInfo.getFrom_location(), LocalDateTime.parse(time, dateTimeFormatter));
+        List<StopAndTimes> stopAndTimesList = new LinkedList<>();
+        List<JsonableStopTime> jsonableStopTimes;
+        for(var entry : fastestRoutes.entrySet()){
+            jsonableStopTimes = new LinkedList<>();
+            for(var stopTime : entry.getValue()){
+                jsonableStopTimes.add(new JsonableStopTime(stopTime));
+            }
+            stopAndTimesList.add(new StopAndTimes(entry.getKey(), jsonableStopTimes));
+        }
+
+
+        return stopAndTimesList;
     }
 }
