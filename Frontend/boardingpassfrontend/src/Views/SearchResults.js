@@ -26,7 +26,7 @@ const SearchResults = () => {
 
   console.log(data)
   return (
-    <div>SearchResults for {location.state}: {data === null ? "loading" : data}</div>
+    <div>SearchResults for {location.state}: {data === null ? "loading" : "success"}</div>
   )
 }
 
