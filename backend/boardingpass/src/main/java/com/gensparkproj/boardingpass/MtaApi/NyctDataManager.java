@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -117,7 +119,7 @@ public final class NyctDataManager {
 
     private void findPaths(Set<LinkedList<StopTime>> masterSet, Stop forbiddenStop, LocalDate chosenDay, LocalTime lastTime, LinkedList<StopTime> toFollow, HashMap<String, LocalTime> earliest) {
         //if(toFollow.size() >= 10) {return;}
-        Step lastStep = toFollow.getLast();
+        StopTime lastStep = toFollow.getLast();
         subwayStopTimes.get(subwayStops.get(lastStep.stop_id())).stream()
                 .map(st -> subwayTrips.get(st.trip_id()).subList(st.stop_sequence(), subwayTrips.get(st.trip_id()).size()))
                 .flatMap(Collection::stream)

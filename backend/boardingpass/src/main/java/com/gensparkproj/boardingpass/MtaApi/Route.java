@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 public record Route(
         String route_id,
         String agency_id,

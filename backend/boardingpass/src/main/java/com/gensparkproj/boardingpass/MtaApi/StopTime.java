@@ -1,3 +1,5 @@
+package com.gensparkproj.boardingpass.MtaApi;
+
 import java.time.LocalTime;
 
 public record StopTime(
@@ -10,7 +12,7 @@ public record StopTime(
         String pickup_type,
         String drop_off_type,
         String shape_dist_traveled
-) implements Step {
+) {
     public StopTime(String[] args) {
         this(args[0], getTime(args[1]), getTime(args[2]), args[3], Integer.parseInt(args[4]), args[5], args[6], args[7], args.length > 8 ? args[8] : "");
     }
