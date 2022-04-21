@@ -7,8 +7,23 @@ class Welcome extends React.Component {
   super();
   this.state = {
    from: "",
+   date: "",
+   firstName: "",
+   lastName: "",
+   email: "",
+   phoneNumber: "",
+   age: "",
+   selectedGender: ""
   };
   this.handleFrom = this.handleFrom.bind(this);
+  this.handleDate = this.handleDate.bind(this);
+  this.handleFirstName = this.handleFirstName.bind(this);
+  this.handleLastName = this.handleLastName.bind(this);
+  this.handleEmail = this.handleEmail.bind(this);
+  this.handlePhone = this.handlePhone.bind(this);
+  this.handleAge = this.handleAge.bind(this);
+  this.handleGender = this.handleGender.bind(this);
+
  }
 
  handleFrom(e) {
@@ -67,7 +82,7 @@ class Welcome extends React.Component {
      <h2 className="display-5">Please enter your information:</h2>
      <div class="search-form input-group mb-3">
       <span className="input-group-text" id="inputGroup-sizing-default">
-       Date Leaving:
+       Date Leaving: (eg. "2022-04-20 13:08" format: YYYY-MM-DD HH:mm)
       </span>
       <input
        type="text"
@@ -78,7 +93,7 @@ class Welcome extends React.Component {
        aria-describedby="inputGroup-sizing-default"
       ></input>
       <span class="input-group-text" id="inputGroup-sizing-default">
-       From:
+       From: (eg. Atlantic Av-Barclays Ctr)
       </span>
       <input
        type="text"
@@ -95,6 +110,7 @@ class Welcome extends React.Component {
         aria-label="First name"
         class="form-control"
         value={this.state.firstName}
+        onChange={this.handleFirstName}
        ></input>
        <span class="input-group-text">Last Name:</span>
        <input
@@ -102,6 +118,7 @@ class Welcome extends React.Component {
         aria-label="Last name"
         class="form-control"
         value={this.state.lastName}
+        onChange={this.handleLastName}
        ></input>
       </div>
       <div>
@@ -111,6 +128,8 @@ class Welcome extends React.Component {
         aria-label="email"
         class="form-control"
         value={this.state.email}
+        onChange={this.handleEmail}
+
        ></input>
       </div>
       <div>
@@ -120,6 +139,7 @@ class Welcome extends React.Component {
         aria-label="Phone Number"
         class="form-control"
         value={this.state.phoneNumber}
+        onChange={this.handlePhone}
        ></input>
       </div>
       <div>
@@ -135,6 +155,7 @@ class Welcome extends React.Component {
         id="flexRadioDefault1"
         value="male"
         checked={this.state.selectedGender}
+        onChange={this.handleAge}
        ></input>
        <label class="form-check-label" for="flexRadioDefault1">
         Male
@@ -148,6 +169,7 @@ class Welcome extends React.Component {
         id="flexRadioDefault2"
         value="female"
         checked={this.state.selectedGender}
+        onChange={this.handleGender}
        ></input>
        <div>
         <label class="form-check-label" for="flexRadioDefault2">
@@ -157,7 +179,7 @@ class Welcome extends React.Component {
       </div>
      </div>
     </div>
-    <SearchButton from={this.state.from} />
+    <SearchButton from={this.state.from} dateTime={this.state.date}/>
    </div>
   );
  }
