@@ -8,24 +8,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 public record Ticket(String ticketid,
-                     String calendarDate,
+                     String calendar_date,
                      String origin,
                      String destination,
                      String eta,
-                     String departureTime,
+                     String departure_time,
                      String name,
                      String email,
-                     String phoneNumber,
+                     String phone_number,
                      String gender,
                      String age,
-                     String totalTicketPrice
+                     String total_ticket_price
                      ){
     private static final double BASE_PRICE = 2.75;
     private static final String FILE_NAME = "ticket";
 
     public static int getUnusedID() {
         for(int i = 0; i < Integer.MAX_VALUE; i++) {
-            if(Files.exists(Path.of(FILE_NAME + i))) {
+            if(!Files.exists(Path.of(FILE_NAME + i))) {
                 return i;
             }
         }
@@ -57,17 +57,17 @@ public record Ticket(String ticketid,
 
     public void save() throws IOException {
         BufferedWriter bPass = new BufferedWriter(new FileWriter(FILE_NAME+ticketid));
-        writeLine(bPass, calendarDate);
+        writeLine(bPass, calendar_date);
         writeLine(bPass, origin);
         writeLine(bPass, destination);
         writeLine(bPass, eta);
-        writeLine(bPass, departureTime);
+        writeLine(bPass, departure_time);
         writeLine(bPass, name);
         writeLine(bPass, email);
-        writeLine(bPass, phoneNumber);
+        writeLine(bPass, phone_number);
         writeLine(bPass, gender);
         writeLine(bPass, age);
-        writeLine(bPass, totalTicketPrice);
+        writeLine(bPass, total_ticket_price);
         bPass.close();
     }
 

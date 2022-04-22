@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, Link } from "react-router-dom"
 import {
-  Box, Button, CircularProgress, Grid, Card, CardActionArea,
-  CardMedia, CardContent, Typography, FormControl, RadioGroup, FormControlLabel, Radio, FormGroup, Checkbox, InputLabel, Select, MenuItem
+  Grid, Card, CardActionArea, CardContent, Typography
 } from '@mui/material'
 
 const SearchResults = () => {
@@ -41,7 +40,6 @@ const SearchResults = () => {
 
 
 
-  console.log(data)
   return (
     <div>
       <p>{location.state[2]} {location.state[3]}, Here are your search results for stop</p>
@@ -59,7 +57,8 @@ const SearchResults = () => {
   )
 }
 
-function getCard(dataIdx, state) {
+function getCard(dataIdx, customerInfo) {
+
   return (
     <Grid
       item
@@ -67,7 +66,7 @@ function getCard(dataIdx, state) {
       md={3}
     >
       <Card>
-        <CardActionArea component={Link} to={"/ticket"} state={state}>
+        <CardActionArea component={Link} to={"/ticket"} state={{customerInfo: customerInfo, dataIdx: dataIdx}}>
 
           <CardContent sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
             <Typography gutterBottom noWrap component="div">

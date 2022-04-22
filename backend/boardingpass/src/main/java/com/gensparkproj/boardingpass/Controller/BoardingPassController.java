@@ -7,6 +7,7 @@ import com.gensparkproj.boardingpass.Dao.TrainTicketDao;
 import com.gensparkproj.boardingpass.Entity.CustomerTravelInfo;
 import com.gensparkproj.boardingpass.Entity.JsonableStopTime;
 import com.gensparkproj.boardingpass.Entity.StopAndTimes;
+import com.gensparkproj.boardingpass.Entity.Ticket;
 import com.gensparkproj.boardingpass.MtaApi.NyctDataManager;
 import com.gensparkproj.boardingpass.MtaApi.Stop;
 import com.gensparkproj.boardingpass.MtaApi.StopTime;
@@ -35,7 +36,7 @@ public class BoardingPassController {
     NyctDataManager nyctDataManager;
 
 
-    //Test db communication with get request
+    //Test frontend communication with post request, crossorigin present to bypass cors policy
     @PostMapping("/searchresults")
     @CrossOrigin(origins = "http://localhost:3000")
     public List<StopAndTimes> getPossibleDestinations(@RequestBody CustomerTravelInfo customerTravelInfo) throws IOException {
@@ -66,5 +67,24 @@ public class BoardingPassController {
 
 
         return stopAndTimesList;
+    }
+
+    //post request to get ticket info, generate ticket, and send back to front end
+    @PostMapping("/ticket")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Ticket getTicket(@RequestBody Ticket ticketInfo) throws IOException {
+        String ticket_id = "0";
+        String ticket_price = "0";
+
+        ticket_id = String.valueOf(Ticket.getUnusedID());
+        ticket_price = String.valueOf(ticketInfo.getPrice());
+
+        Ticket newTicket = new Ticket(ticket_id, ticketInfo.calendar_date(), ticketInfo.origin(),
+                ticketInfo.destination(), ticketInfo.eta(), ticketInfo.departure_time(), ticketInfo.name(),
+                ticketInfo.email(), ticketInfo.phone_number(), ticketInfo.gender(), ticketInfo.age(), ticket_price);
+
+        newTicket.save();
+
+        return newTicket;
     }
 }
