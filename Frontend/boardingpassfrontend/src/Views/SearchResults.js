@@ -43,23 +43,23 @@ const SearchResults = () => {
 
   console.log(data)
   return (
-    <div>Search results for stop {location.state[0]} at time {location.state[1]}:
-      <p>
-
-      </p>
+    <div>
+      <p>{location.state[2]} {location.state[3]}, Here are your search results for stop</p>
+      <p>{location.state[0]} at time {location.state[1]},</p>
+      <p>Select one of the options to generate a boarding ticket.</p>
       <Grid container spacing={2} >
         {data != null && data.length != 0
           ?
-          data.map((dataIdx) => getCard(dataIdx))
+          data.map((dataIdx) => getCard(dataIdx, location.state))
           :
-          <div>Loading Search Results</div>
+          <div>Loading Search Results...</div>
         }
       </Grid>
     </div>
   )
 }
 
-function getCard(dataIdx) {
+function getCard(dataIdx, state) {
   return (
     <Grid
       item
@@ -67,7 +67,7 @@ function getCard(dataIdx) {
       md={3}
     >
       <Card>
-        <CardActionArea component={Link} to={"/searchresults"}>
+        <CardActionArea component={Link} to={"/ticket"} state={state}>
 
           <CardContent sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
             <Typography gutterBottom noWrap component="div">
