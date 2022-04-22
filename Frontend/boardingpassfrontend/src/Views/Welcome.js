@@ -13,7 +13,7 @@ class Welcome extends React.Component {
             email: "",
             phoneNumber: "",
             age: "",
-            selectedGender: false
+            selectedGender: ""
         };
         this.handleFrom = this.handleFrom.bind(this);
         this.handleDate = this.handleDate.bind(this);
@@ -70,7 +70,7 @@ class Welcome extends React.Component {
 
     handleGender(e) {
         this.setState({
-            selectedGender: true
+            selectedGender: e.target.value
         });
     }
 
@@ -160,8 +160,9 @@ class Welcome extends React.Component {
                                 type="radio"
                                 name="flexRadioDefault"
                                 id="male"
-                                value={this.state.selectedGender}
-                                checked
+                                value="Male"
+                                checked={this.state.selectedGender === 'Male'}
+                                onChange={this.handleGender}
                             ></input>
                             <label class="form-check-label" for="flexRadioDefault1">
                                 Male
@@ -173,7 +174,9 @@ class Welcome extends React.Component {
                                 type="radio"
                                 name="flexRadioDefault"
                                 id="female"
-                                value={this.state.selectedGender}
+                                value="Female"
+                                checked={this.state.selectedGender === 'Female'}
+                                onChange={this.handleGender}
                             ></input>
                             <div>
                                 <label class="form-check-label" for="flexRadioDefault2">
@@ -183,7 +186,16 @@ class Welcome extends React.Component {
                         </div>
                     </div>
                 </div>
-                <SearchButton from={this.state.from} dateTime={this.state.date} />
+                <SearchButton
+                    from={this.state.from}
+                    dateTime={this.state.date}
+                    firstName={this.state.firstName}
+                    lastName={this.state.lastName}
+                    email={this.state.email}
+                    phoneNumber={this.state.phoneNumber}
+                    age={this.state.age}
+                    selectedGender={this.state.selectedGender}
+                />
             </div>
         );
     }

@@ -35,6 +35,7 @@ public final class NyctDataManager {
     /**
      * Creates a NYCT data manager that downloads all static info from MTA's website (as of now, no caching is provided),
      * and stores various parts of it in memory to perform calculations on.
+     *
      * @throws IOException Unable to download the static data .zip from MTA's website
      */
     public NyctDataManager() throws IOException {
@@ -59,15 +60,16 @@ public final class NyctDataManager {
      * Finds all possible routes via the NYCT subway system on a given day, minus redundancies.
      * Only the quickest route to the destination Stop will be returned
      * Known issues:
-     *      1. The fromTime parameter strictly enforces the given Date, which means if the passenger is looking for a train
-     *          at 11:30pm, they might just be out of luck.
+     * 1. The fromTime parameter strictly enforces the given Date, which means if the passenger is looking for a train
+     * at 11:30pm, they might just be out of luck.
+     *
      * @param fromStopName The name of the origin Stop, as listed in getAllStopNames()
-     * @param fromTime The time our passenger has arrived at the origin Stop, e.g. the earliest possible time
-     *                 a train included in our route may depart from the origin Stop.
-     *                 All trains are also required to leave on this date, but that will be changed in a future update
+     * @param fromTime     The time our passenger has arrived at the origin Stop, e.g. the earliest possible time
+     *                     a train included in our route may depart from the origin Stop.
+     *                     All trains are also required to leave on this date, but that will be changed in a future update
      * @return Returns a HashMap linking each final Destination with the fastest possible route to get there,
-     *         which is described in StopTimes. The route will NOT include Stops the train passes where our passenger
-     *         stays on board.
+     * which is described in StopTimes. The route will NOT include Stops the train passes where our passenger
+     * stays on board.
      */
     public Map<Stop, LinkedList<StopTime>> getPossibleDestinations(String fromStopName, LocalDateTime fromTime) {
         //E01N: World Trade Center
@@ -86,14 +88,27 @@ public final class NyctDataManager {
                 .filter(st -> {
                     Calendar schedule = subwayHours.get(subwayTripInfo.get(st.trip_id()).service_id());
                     boolean withinDateRange =
-                            ( ! chosenDay.isBefore( schedule.start_date() ) ) // Short way to say "is equal to or is after".
+                            (!chosenDay.isBefore(schedule.start_date())) // Short way to say "is equal to or is after".
                                     &&
-                                    chosenDay.isBefore( schedule.end_date() );
+                                    chosenDay.isBefore(schedule.end_date());
                     return schedule.days().contains(chosenDay.getDayOfWeek()) && withinDateRange && chosenTime.isBefore(st.arrival_time());
                 })
                 .forEach((firstStep) -> {
                     earliestTimes.put(firstStep.stop_id(), firstStep.arrival_time());
                     LinkedList<StopTime> path = new LinkedList<>();
+
+                    path.add(
+                            subwayTrips.get(firstStep.trip_id()).stream()
+                                    .filter(st -> {
+                                                Calendar schedule = subwayHours.get(subwayTripInfo.get(st.trip_id()).service_id());
+                                                boolean withinDateRange =
+                                                        (!chosenDay.isBefore(schedule.start_date()))
+                                                                &&
+                                                                chosenDay.isBefore(schedule.end_date());
+                                                return schedule.days().contains(chosenDay.getDayOfWeek()) && withinDateRange && chosenTime.isBefore(st.departure_time());
+                                            }
+                                    ).findFirst().orElseThrow());
+
                     LocalTime firstTime = firstStep.arrival_time();
                     path.add(firstStep);
                     paths.add(path);
@@ -105,12 +120,12 @@ public final class NyctDataManager {
         HashMap<Stop, LinkedList<StopTime>> fastestRoutes = new HashMap<>();
 
         //int i = 1;
-        for(LinkedList<StopTime> path : paths) {
+        for (LinkedList<StopTime> path : paths) {
             /*System.out.println("Path "+(i++)+": ");
             for(StopTime st : path) {
                 System.out.println("Take train to " + subwayStops.get(st.stop_id()).stop_id() + " at " + st.departure_time());
             }*/
-            if(fastestRoutes.get(subwayStops.get(path.getLast().stop_id())) == null || (fastestRoutes.get(subwayStops.get(path.getLast().stop_id())).getLast()).departure_time().isAfter(path.getLast().departure_time())) {
+            if (fastestRoutes.get(subwayStops.get(path.getLast().stop_id())) == null || (fastestRoutes.get(subwayStops.get(path.getLast().stop_id())).getLast()).departure_time().isAfter(path.getLast().departure_time())) {
                 fastestRoutes.put(subwayStops.get(path.getLast().stop_id()), path);
             }
             //System.out.println();
@@ -129,9 +144,9 @@ public final class NyctDataManager {
                 .filter(st -> {
                     Calendar schedule = subwayHours.get(subwayTripInfo.get(st.trip_id()).service_id());
                     boolean withinDateRange =
-                            ( ! chosenDay.isBefore( schedule.start_date() ) ) // Short way to say "is equal to or is after".
+                            (!chosenDay.isBefore(schedule.start_date())) // Short way to say "is equal to or is after".
                                     &&
-                                    chosenDay.isBefore( schedule.end_date() );
+                                    chosenDay.isBefore(schedule.end_date());
 
                     return schedule.days().contains(chosenDay.getDayOfWeek()) &&
                             withinDateRange &&
@@ -157,17 +172,19 @@ public final class NyctDataManager {
         var iterator = zipFile.entries();
         ZipEntry childFile;
         Map<String, InputStream> toParse = new HashMap<>();
-        while(iterator.hasMoreElements() && (childFile = iterator.nextElement()) != null) {
+        while (iterator.hasMoreElements() && (childFile = iterator.nextElement()) != null) {
             toParse.put(childFile.getName(), zipFile.getInputStream(childFile));
         }
 
         //Make sure stops.txt gets parsed first
         parseConfigFile("stops.txt", toParse.remove("stops.txt"));
-        for (var entry : toParse.entrySet()) {parseConfigFile(entry.getKey(), entry.getValue());}
+        for (var entry : toParse.entrySet()) {
+            parseConfigFile(entry.getKey(), entry.getValue());
+        }
     }
 
     private void parseConfigFile(String fileName, InputStream fileStream) throws IOException {
-        switch(fileName) {
+        switch (fileName) {
             case "stops.txt" -> createPojos(fileStream, Stop.class, placeStops);
             case "transfers.txt" -> createPojos(fileStream, Transfer.class, placeTransfers);
             case "trips.txt" -> createPojos(fileStream, Trip.class, placeTrips);
@@ -185,7 +202,9 @@ public final class NyctDataManager {
 
     private final Consumer<Transfer> placeTransfers = transfer -> {
         subwayTransfers.compute(subwayStops.get(transfer.from_stop_id()), (k, v) -> {
-            if(v == null) {v = new HashSet<>();}
+            if (v == null) {
+                v = new HashSet<>();
+            }
             v.add(transfer);
             return v;
         });
@@ -201,12 +220,16 @@ public final class NyctDataManager {
 
     private final Consumer<StopTime> placeStopTimes = stopTime -> {
         subwayTrips.compute(stopTime.trip_id(), (k, v) -> {
-            if(v == null) {v = new LinkedList<>();}
-            v.add(stopTime.stop_sequence()-1, stopTime);
+            if (v == null) {
+                v = new LinkedList<>();
+            }
+            v.add(stopTime.stop_sequence() - 1, stopTime);
             return v;
         });
         subwayStopTimes.compute(subwayStops.get(stopTime.stop_id()), (k, v) -> {
-            if(v == null) {v = new HashSet<>();}
+            if (v == null) {
+                v = new HashSet<>();
+            }
             v.add(stopTime);
             return v;
         });

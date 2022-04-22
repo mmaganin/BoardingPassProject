@@ -7,11 +7,13 @@ import java.util.List;
 
 public class StopAndTimes {
     private Stop stop;
-    private List<JsonableStopTime> jsonableStopTimes;
+    private String eta;
+    private String depart_time;
 
-    public StopAndTimes(Stop stop, List<JsonableStopTime> jsonableStopTimes) {
+    public StopAndTimes(Stop stop, String eta, String depart_time) {
         this.stop = stop;
-        this.jsonableStopTimes = jsonableStopTimes;
+        this.eta = eta;
+        this.depart_time = depart_time;
     }
 
     public Stop getStop() {
@@ -22,19 +24,28 @@ public class StopAndTimes {
         this.stop = stop;
     }
 
-    public List<JsonableStopTime> getJsonableStopTimes() {
-        return jsonableStopTimes;
+    public String getEta() {
+        return eta;
     }
 
-    public void setJsonableStopTimes(List<JsonableStopTime> jsonableStopTimes) {
-        this.jsonableStopTimes = jsonableStopTimes;
+    public void setEta(String eta) {
+        this.eta = eta;
+    }
+
+    public String getDepart_time() {
+        return depart_time;
+    }
+
+    public void setDepart_time(String depart_time) {
+        this.depart_time = depart_time;
     }
 
     @Override
     public String toString() {
         return "StopAndTimes{" +
                 "stop=" + stop +
-                ", jsonableStopTimes=" + jsonableStopTimes +
+                ", eta='" + eta + '\'' +
+                ", depart_time='" + depart_time + '\'' +
                 '}';
     }
 }

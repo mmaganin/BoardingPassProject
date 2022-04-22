@@ -46,13 +46,22 @@ public class BoardingPassController {
         Map<Stop, LinkedList<StopTime>> fastestRoutes = nyctDataManager.getPossibleDestinations(customerTravelInfo.getFrom_location(), LocalDateTime.parse(time, dateTimeFormatter));
 
         List<StopAndTimes> stopAndTimesList = new LinkedList<>();
-        List<JsonableStopTime> jsonableStopTimes;
+        String eta;
+        String departTime;
+        LinkedList<StopTime> stopTimes;
+
+//        List<JsonableStopTime> jsonableStopTimes;
         for(var entry : fastestRoutes.entrySet()){
-            jsonableStopTimes = new LinkedList<>();
-            for(var stopTime : entry.getValue()){
-                jsonableStopTimes.add(new JsonableStopTime(stopTime));
-            }
-            stopAndTimesList.add(new StopAndTimes(entry.getKey(), jsonableStopTimes));
+//            jsonableStopTimes = new LinkedList<>();
+//            for(var stopTime : entry.getValue()){
+//                jsonableStopTimes.add(new JsonableStopTime(stopTime));
+//            }
+
+            stopTimes = entry.getValue();
+            eta = stopTimes.getLast().arrival_time().toString();
+            departTime = stopTimes.get(0).departure_time().toString();
+
+            stopAndTimesList.add(new StopAndTimes(entry.getKey(), eta, departTime));
         }
 
 
