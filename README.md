@@ -1,5 +1,7 @@
 # BoardingPassProject
 
+Publically available at https://gensparkmta.co
+
 backend:
 make sure to have this in your application.properties file in the resources folder after installing MySQL installer on your machine...
 
